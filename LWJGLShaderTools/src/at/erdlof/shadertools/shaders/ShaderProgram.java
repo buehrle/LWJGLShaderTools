@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL20;
 
 public class ShaderProgram {
 	private int shaderProgramID;
-
+	
 	public ShaderProgram(VertexShader vertexShader, FragmentShader fragmentShader) {
 		shaderProgramID = ARBShaderObjects.glCreateProgramObjectARB();
 		ARBShaderObjects.glAttachObjectARB(shaderProgramID, vertexShader.getShaderID());
