@@ -1,17 +1,21 @@
 package at.erdlof.shadertools.shaders;
 
-import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBShaderObjects;
+import static org.lwjgl.opengl.ARBFragmentShader.*;
+import static org.lwjgl.opengl.ARBShaderObjects.*;
 
+/**
+ * @author Florian Bührle
+ */
 public class FragmentShader extends Shader {
 	private int fragmentShaderID;
 	
-	public FragmentShader(String code) {
-		super(code);
+	public FragmentShader(String programCode) {
+		super(programCode);
 		
-		fragmentShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
-		ARBShaderObjects.glShaderSourceARB(fragmentShaderID, getProgramCode());
-		ARBShaderObjects.glCompileShaderARB(fragmentShaderID);
+		fragmentShaderID = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+		glShaderSourceARB(fragmentShaderID, getProgramCode());
+		glCompileShaderARB(fragmentShaderID);
+		super.validate();
 	}
 	
 	@Override
