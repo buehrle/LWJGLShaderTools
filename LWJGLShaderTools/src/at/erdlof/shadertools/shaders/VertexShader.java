@@ -1,26 +1,20 @@
 package at.erdlof.shadertools.shaders;
 
-import static org.lwjgl.opengl.ARBShaderObjects.*;
-import static org.lwjgl.opengl.ARBVertexShader.*;
+import static org.lwjgl.opengl.ARBShaderObjects.glCompileShaderARB;
+import static org.lwjgl.opengl.ARBShaderObjects.glCreateShaderObjectARB;
+import static org.lwjgl.opengl.ARBShaderObjects.glShaderSourceARB;
+import static org.lwjgl.opengl.ARBVertexShader.GL_VERTEX_SHADER_ARB;
 
 /**
  * @author Florian Bührle
  */
 public class VertexShader extends Shader {
-	private int vertexShaderID;
-	
 	public VertexShader(String programCode) {
 		super(programCode);
 		
-		vertexShaderID = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-		glShaderSourceARB(vertexShaderID, getProgramCode());
-		glCompileShaderARB(vertexShaderID);
+		setShaderID(glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB));
+		glShaderSourceARB(getShaderID(), getProgramCode());
+		glCompileShaderARB(getShaderID());
 		super.validate();
 	}
-	
-	@Override
-	public int getShaderID() {
-		return vertexShaderID;
-	}
-
 }
