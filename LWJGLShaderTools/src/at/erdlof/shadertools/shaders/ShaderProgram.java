@@ -19,13 +19,10 @@ import static org.lwjgl.opengl.ARBVertexShader.glGetAttribLocationARB;
 
 import java.util.HashMap;
 
+import org.lwjgl.opengl.ContextCapabilities;
+import org.lwjgl.opengl.GLContext;
+
 /**
- * A shader program to manage a vertex and a fragment shader.
- * <p>
- * Usage:
- * <br>
- * {@link #bind() Bind} the shader before rendering the object(s) on which the shader should be applied.
- * {@link #unbind() Unbind} it afterwards. Only one shader program can be used simultaneously.
  * @author Florian Bührle
  */
 public class ShaderProgram implements Validable {
@@ -45,6 +42,8 @@ public class ShaderProgram implements Validable {
 			throw new InvalidShaderException("One or both of the passed shaders are invalid.");
 		}
 		
+		if (!isSupported()) throw new RuntimeException("Shaders are not supported on this system.");
+		
 		shaderProgramID = glCreateProgramObjectARB();
 		this.vertexShader = vertexShader;
 		this.fragmentShader = fragmentShader;
@@ -59,15 +58,15 @@ public class ShaderProgram implements Validable {
 		this.valid = true;
 	}
 	
-//	/**
-//	 * Checks if the used OpenGL layer supports shaders.
-//	 * @return true if shaders are supported.
-//	 */
-//	public static boolean isSupported() {
-//		ContextCapabilities c = GLContext.getCapabilities();
-//		
-//		return c.GL_ARB_shader_objects && c.GL_ARB_vertex_shader && c.GL_ARB_fragment_shader;
-//	}
+	/**
+	 * Checks if the used OpenGL layer supports shaders.
+	 * @return true if shaders are supported.
+	 */
+	public static boolean isSupported() {
+		ContextCapabilities c = GLContext.getCapabilities();
+		
+		return c.GL_ARB_shader_objects && c.GL_ARB_vertex_shader && c.GL_ARB_fragment_shader;
+	}
 	
 	/**
 	 * Binds this shader. This means, that every render action after
